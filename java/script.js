@@ -34,7 +34,7 @@ const btnConfirmPayment = document.getElementById("btnConfirmPayment");
 
 // --- PAYOS AUTOMATIC PAYMENT DETECTION CONFIG ---
 let payosPollingInterval = null;
-const PAYOS_SERVER_URL = "https://nhanvien5.onrender.com/"; // Thay link Render của bạn vào đây sau khi deploy (vd: https://payos-pos-server.onrender.com)
+const PAYOS_SERVER_URL = "https://nhanvien5.onrender.com"; // Thay link Render của bạn vào đây sau khi deploy (vd: https://payos-pos-server.onrender.com)
 
 // --- FACE RECOGNITION VARIABLES ---
 let labeledFaceDescriptors = [];
