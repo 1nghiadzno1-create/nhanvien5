@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Store POS Pro</title>
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-left">
+            <span><i class="fas fa-shopping-cart" style="margin-right: 8px;"></i>MINI STORE POS PRO</span>
+            <span id="customerPanel" class="customer-info hidden">
+                <i class="fas fa-user-circle" style="margin-right: 6px;"></i><span id="customerName">Đang nhận
+                    diện...</span>
+                <span id="customerVouchers" class="voucher-badge hidden">Có 0 voucher</span>
+                <button id="btnResetCustomer"
+                    style="margin-left: 8px; padding: 2px 8px; background: rgba(255, 51, 102, 0.15); color: #ff3366; border: 1px solid #ff3366; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; font-family: inherit; transition: all 0.2s;">Hủy</button>
+            </span>
+        </div>
+        <span class="order-info">Order ID: <span id="orderId">...</span></span>
+    </header>
+
+    <!-- Khung chứa camera nhỏ góc dưới -->
+    <div id="camera-container" class="camera-container hidden">
+        <video id="videoElement" autoplay muted playsinline></video>
+        <canvas id="overlayCanvas"></canvas>
+        <div id="cameraStatus">Đang quét khuôn mặt...</div>
+    </div>
+
+    <div class="container">
+        <div class="main-panel">
+            <div class="barcode-area">
+                <input type="text" id="barcodeInput" placeholder="QUÉT MÃ VẠCH HOẶC NHẬP TÊN SẢN PHẨM...">
+            </div>
+
+            <div class="cart-card">
+                <div class="cart-header">
+                    <h2>Giỏ hàng hiện tại</h2>
+                </div>
+                <div id="cartItems">
+                </div>
+
+                <div class="total-section">
+                    <div id="voucherApplyContainer" class="hidden"
+                        style="margin-bottom: 10px; padding: 10px; background: rgba(255, 179, 0, 0.05); border: 1px dashed rgba(255, 179, 0, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+                        <label
+                            style="display: flex; align-items: center; gap: 8px; color: #ffb300; cursor: pointer; font-size: 14px; font-weight: 600; margin: 0;">
+                            <input type="checkbox" id="chkUseVoucher" style="transform: scale(1.2); cursor: pointer;">
+                            <i class="fas fa-ticket-alt" style="color: #ffb300;"></i> Áp dụng Voucher:
+                        </label>
+                        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                            <select id="selVoucher"
+                                style="padding: 4px 8px; background: #1a1d27; color: #ffb300; border: 1px solid #ffb300; border-radius: 6px; outline: none; cursor: pointer; font-weight: bold; font-family: inherit;"></select>
+                            <span style="color: #ffb300; font-size: 11px; font-weight: bold; opacity: 0.8;">HOẶC:</span>
+                            <input type="text" id="voucherCodeInput" placeholder="Mã voucher..."
+                                style="padding: 4px 8px; background: #1a1d27; color: #ffb300; border: 1px solid #ffb300; border-radius: 6px; outline: none; font-weight: bold; font-family: inherit; width: 110px; text-transform: uppercase;">
+                            <button id="btnApplyVoucherCode" type="button"
+                                style="padding: 4px 10px; background: #ffb300; color: #1a1d27; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: inherit; transition: all 0.2s;">Áp
+                                dụng</button>
+                        </div>
+                    </div>
+                    <div class="total">
+                        <span>Tổng thanh toán:</span>
+                        <span><span id="totalPrice">0</span>đ</span>
+                    </div>
+                    <button class="order-btn" onclick="checkout()">THANH TOÁN & IN BILL (F9)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal chọn phương thức thanh toán -->
+    <div id="paymentModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal" id="btnCloseModal">&times;</span>
+            <h2>Chọn phương thức thanh toán</h2>
+            <div class="payment-options">
+                <button class="pay-option-btn cash-btn" id="btnStaffPayCash"><i class="fas fa-money-bill-wave"
+                        style="margin-right: 8px;"></i>TIỀN MẶT</button>
+                <button class="pay-option-btn qr-btn" id="btnStaffPayQr"><i class="fas fa-qrcode"
+                        style="margin-right: 8px;"></i>CHUYỂN KHOẢN</button>
+            </div>
+            <div id="paymentActions" class="hidden">
+                <p id="paymentStatusText"></p>
+                <button id="btnConfirmPayment" class="confirm-btn">ĐÃ THANH TOÁN & IN BILL</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Face API JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1/dist/face-api.min.js"></script>
+    <script type="module" src="java/script.js"></script>
+</body>
+
+</html>
